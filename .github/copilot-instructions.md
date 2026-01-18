@@ -9,7 +9,7 @@ This is an Astro.js starter template designed for deployment on Netlify, showcas
 - **Framework**: Astro 5.x with SSR support
 - **UI Library**: React 19.x for interactive components
 - **Styling**: Tailwind CSS 4.x
-- **Runtime**: Node.js v18.20.8+
+- **Runtime**: Node.js v18.20.8+, v20.3.0+, or v22.0.0+
 - **Deployment**: Netlify with adapter `@astrojs/netlify`
 - **Key Dependencies**:
   - `@netlify/blobs` - Blob storage integration
@@ -113,10 +113,10 @@ import Layout from '../layouts/Layout.astro';
 ### React Component Example
 ```tsx
 import { useState, useEffect } from 'react';
-import type { Props } from './types';
+import type { ComponentType } from '../../types';
 
-export default function Component(props: Props) {
-  const [state, setState] = useState<Type>();
+export default function Component(props: ComponentType) {
+  const [state, setState] = useState<string>();
   // Component logic
   return (/* JSX */);
 }
@@ -124,7 +124,9 @@ export default function Component(props: Props) {
 
 ### API Endpoint Example
 ```ts
-export async function POST({ request }) {
+import type { APIContext } from 'astro';
+
+export async function POST({ request }: APIContext) {
   const data = await request.json();
   // Process request
   return new Response(JSON.stringify({ success: true }));
