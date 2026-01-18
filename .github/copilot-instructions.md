@@ -39,7 +39,6 @@ This is an Astro.js starter template designed for deployment on Netlify, showcas
 - API routes: kebab-case in `src/pages/api/`
 
 ### Imports
-- Use type imports for TypeScript types: `import type { Type } from 'module'`
 - Group imports logically: external packages first, then internal modules
 - Use relative paths for local imports
 - Include file extensions in React component imports (e.g., `./Component.tsx`)
