@@ -5,7 +5,7 @@ export default async (request, context) => {
     const path = countryCode === 'AU' ? '/edge/australia' : '/edge/not-australia';
 
     // Build absolute redirect URL using request.url as base
-    const redirectUrl = new URL(path, request.url).toString();
+    const redirectUrl = new URL(path, request.url);
 
     // Use 302 redirect; explicit
     return Response.redirect(redirectUrl, 302);

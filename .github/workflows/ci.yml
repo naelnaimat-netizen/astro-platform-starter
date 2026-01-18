@@ -25,12 +25,7 @@ jobs:
         run: npm ci
 
       - name: Run lint (if exists)
-        run: |
-          if npm run -s lint; then
-            echo "lint passed"
-          else
-            echo "no lint script or lint failed"
-          fi
+        run: npm run lint || echo "Lint failed or not configured"
 
       - name: Build
         run: npm run build
