@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Markdown from '../components/Markdown.astro';
+
+const reportContent = `
+# Final Report: Astro Platform Starter
+
+This project is a **starter template** that shows how to build modern websites using Astro.js and Netlify. Here's what it demonstrates:
+
+## 🏠 Home Page
+The home page welcomes visitors and explains that Astro websites can do more than just show static content. With Netlify, pages can be rebuilt automatically when data changes, without slowing down the site.
+
+## 🔄 Revalidation
+This feature lets developers update specific pages without rebuilding the entire website. For example, if you update a product price, only that product page needs to refresh. This saves time and keeps the site fast.
+
+**Key benefit:** Update content on demand without waiting for full site rebuilds.
+
+## 🖼️ Image CDN
+Images are automatically optimized for faster loading. The system:
+- Resizes images based on device screen size
+- Converts images to modern formats (like WebP)
+- Reduces file sizes without losing quality
+
+**Key benefit:** Faster page loads and better user experience, especially on mobile devices.
+
+## 🌏 Edge Functions
+These are special functions that run close to your visitors, no matter where they are in the world. In this demo, the page shows different content based on your location (Australia vs. everywhere else).
+
+**Key benefit:** Super fast responses because the code runs near your users, not just on one server far away.
+
+## 💾 Blobs Storage
+This is a storage system for any kind of data. In this demo, you can create colorful blob shapes, save them, and view other people's creations. Think of it as a simple database that works seamlessly with your website.
+
+**Key benefit:** Easy way to store and retrieve user-generated content or application data.
+
+## Summary
+This starter template combines all these features to show how modern websites can be:
+- **Fast** - Content loads quickly from servers near your users
+- **Smart** - Only update what changed, not everything
+- **Efficient** - Images and assets are automatically optimized
+- **Dynamic** - Store data and create interactive experiences
+
+All of this works together on Netlify's platform, making it easier to build professional websites without managing complex infrastructure.
+`;
+---
+
+<Layout title="Final Report">
+    <Markdown content={reportContent} class="mb-10" />
+</Layout>
