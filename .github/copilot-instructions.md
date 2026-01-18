@@ -38,6 +38,13 @@ This is an Astro.js starter template designed for deployment on Netlify, showcas
 - Pages: kebab-case (e.g., `image-cdn.astro`)
 - API routes: kebab-case in `src/pages/api/`
 
+### Imports
+- Use type imports for TypeScript types: `import type { Type } from 'module'`
+- Group imports logically: external packages first, then internal modules
+- Use relative paths for local imports
+- Include file extensions in React component imports (e.g., `./Component.tsx`)
+- Import from `src/types.ts` for shared type definitions
+
 ## Project Structure
 
 ```
@@ -62,6 +69,13 @@ src/
 - Use React components (`.tsx`) for interactive client-side features
 - Place page-specific React components in `_components` subdirectories
 - Keep components focused and single-responsibility
+
+### Client-Side Hydration
+- Use `client:load` for components that need immediate interactivity
+- Use `client:idle` for components that can wait until the page is idle
+- Use `client:visible` for components that should hydrate when visible
+- Use `client:only` sparingly for client-only components
+- Default to no hydration directive when interactivity isn't needed
 
 ### State Management
 - Use React hooks (`useState`, `useEffect`) for client-side state
@@ -138,9 +152,48 @@ export const POST: APIRoute = async ({ request }) => {
 - Build with `npm run build` to check for errors
 - Preview builds with `npm run preview`
 - Test Netlify features using `netlify dev` when applicable
+- No automated test suite is currently configured (no test runner like Jest or Vitest)
+- Manual testing is the primary validation method
+
+## Error Handling
+- Always wrap async operations in try-catch blocks
+- Return appropriate HTTP status codes from API routes (400 for bad requests, 500 for server errors)
+- Provide meaningful error messages in responses
+- Use optional chaining (`?.`) and nullish coalescing (`??`) to handle undefined values safely
+- Validate user input before processing in API routes
+
+## Security Best Practices
+- Never commit sensitive data (API keys, secrets) to the repository
+- Use Netlify environment variables for sensitive configuration
+- Validate and sanitize user inputs in API endpoints
+- Use TypeScript's type system to prevent common errors
+- Implement proper CORS policies when needed
+- Set `prerender = false` for dynamic API routes that access server-side resources
+
+## Dependency Management
+- Use npm for package management
+- Keep dependencies up to date (Renovate is configured via `renovate.json`)
+- Prefer stable, well-maintained packages
+- Review dependency security advisories regularly
+- Avoid adding unnecessary dependencies
+
+## Build & Deployment
+- The project builds to `./dist/` directory
+- Deployment is handled automatically by Netlify on push to main branch
+- SSR is enabled via `@astrojs/netlify` adapter
+- Build command: `npm run build`
+- Node.js runtime requirements: v18.20.8+, v20.3.0+, or v22.0.0+
+
+## Comments & Documentation
+- Add comments only when code behavior is non-obvious
+- Document complex algorithms or business logic
+- Use JSDoc comments for utility functions when helpful
+- Keep comments concise and up-to-date with code changes
+- Prefer self-documenting code over excessive comments
 
 ## Additional Context
 - This project demonstrates Netlify platform features
 - Focus on modern web standards and performance
 - Showcase SSR, Edge Functions, and Blob storage capabilities
 - Maintain simplicity while demonstrating advanced features
+- This is a starter template, so prioritize clarity and educational value
