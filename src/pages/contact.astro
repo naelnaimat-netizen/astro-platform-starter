@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Markdown from '../components/Markdown.astro';
+
+const contactInfo = `
+# Contact Us
+
+Have questions about the Astro Platform Starter? We'd love to hear from you!
+
+## Get in Touch
+
+**Email:** support@example.com
+
+**GitHub:** [Report an issue](https://github.com/netlify-templates/astro-platform-starter/issues)
+
+**Documentation:** [Astro on Netlify](https://docs.netlify.com/frameworks/astro/)
+
+## About This Project
+
+This is a starter template showcasing how to build modern websites with Astro.js and Netlify. It demonstrates:
+
+- Server-side rendering with streaming
+- Edge functions for geo-based routing
+- Image optimization with Netlify Image CDN
+- On-demand revalidation
+- Blob storage for user data
+
+Feel free to fork this project and make it your own!
+
+## Resources
+
+- [Astro Documentation](https://docs.astro.build/)
+- [Netlify Documentation](https://docs.netlify.com/)
+- [Deploy Your Own](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/astro-platform-starter)
+`;
+---
+
+<Layout title="Contact">
+    <h1 class="mb-10">Contact</h1>
+    <Markdown content={contactInfo} class="mb-10" />
+</Layout>
