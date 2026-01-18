@@ -113,9 +113,9 @@ import Layout from '../layouts/Layout.astro';
 ### React Component Example
 ```tsx
 import { useState, useEffect } from 'react';
-import type { ComponentType } from '../../types';
+import type { BlobProps } from '../../types';
 
-export default function Component(props: ComponentType) {
+export default function Component(props: { data: BlobProps }) {
   const [state, setState] = useState<string>();
   // Component logic
   return (/* JSX */);
@@ -124,13 +124,13 @@ export default function Component(props: ComponentType) {
 
 ### API Endpoint Example
 ```ts
-import type { APIContext } from 'astro';
+import type { APIRoute } from 'astro';
 
-export async function POST({ request }: APIContext) {
+export const POST: APIRoute = async ({ request }) => {
   const data = await request.json();
   // Process request
   return new Response(JSON.stringify({ success: true }));
-}
+};
 ```
 
 ## Testing & Validation
