@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Markdown from '../components/Markdown.astro';
+
+const sampleVideo = 'https://www.w3schools.com/html/mov_bbb.mp4';
+
+const videoExplainer = `
+## Video Support
+
+Astro supports video content through standard HTML5 video elements. You can embed videos directly in your pages with full playback controls.
+
+~~~jsx
+<video controls width="100%">
+    <source src="video-url.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+</video>
+~~~
+`;
+
+const embedExplainer = `
+## Embedding External Videos
+
+You can also embed videos from external platforms like YouTube or Vimeo using iframes:
+
+~~~jsx
+<iframe 
+    width="100%" 
+    height="400" 
+    src="https://www.youtube.com/embed/VIDEO_ID"
+    style="border: 0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+</iframe>
+~~~
+`;
+---
+
+<Layout title="Video Support">
+    <div class="flex flex-col gap-12 sm:gap-16">
+        <section>
+            <h1>Video Support</h1>
+            <p class="mt-4 text-lg text-gray-300">
+                Demonstrating video playback capabilities in your Astro application.
+            </p>
+        </section>
+        
+        <section>
+            <Markdown content={videoExplainer} class="mb-8" />
+            <figure>
+                <video 
+                    controls 
+                    width="100%" 
+                    class="border-2 border-white rounded-lg"
+                    preload="metadata"
+                >
+                    <source src={sampleVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+                <figcaption class="mt-2 text-sm italic">
+                    Sample video demonstrating HTML5 video element with playback controls.
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <Markdown content={embedExplainer} class="mb-8" />
+            <figure>
+                <div class="aspect-video border-2 border-white rounded-lg overflow-hidden">
+                    <iframe 
+                        width="100%" 
+                        height="100%"
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                        title="Sample YouTube Video"
+                        style="border: 0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <figcaption class="mt-2 text-sm italic">
+                    Example of embedding a YouTube video using an iframe.
+                </figcaption>
+            </figure>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold mb-4">Video Best Practices</h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-300">
+                <li>Use the <code class="bg-gray-800 px-1 rounded">preload="metadata"</code> attribute to only load video metadata initially</li>
+                <li>Always provide fallback text for browsers that don't support the video element</li>
+                <li>Consider using multiple source formats (MP4, WebM) for broader browser support</li>
+                <li>Add <code class="bg-gray-800 px-1 rounded">poster</code> attribute for a preview image before the video plays</li>
+                <li>Use responsive aspect ratios like <code class="bg-gray-800 px-1 rounded">aspect-video</code> for embedded content</li>
+            </ul>
+        </section>
+    </div>
+</Layout>
