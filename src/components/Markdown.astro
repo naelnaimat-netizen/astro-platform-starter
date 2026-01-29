@@ -11,6 +11,16 @@ interface Props {
 const { content, class: className } = Astro.props;
 
 const highlighter = await highlighterPromise;
+
+const renderer = {
+    link({ href, title, text }: { href: string; title?: string; text: string }) {
+        const isExternal = href?.startsWith('http://') || href?.startsWith('https://');
+        const titleAttr = title ? ` title="${title}"` : '';
+        const externalAttrs = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
+        return `<a href="${href}"${titleAttr}${externalAttrs}>${text}</a>`;
+    }
+};
+
 const html = await new Marked()
     .use(
         markedShiki({
@@ -20,7 +30,8 @@ const html = await new Marked()
                     theme: 'min-dark'
                 });
             }
-        })
+        }),
+        { renderer }
     )
     .parse(content);
 ---
