@@ -12,12 +12,22 @@ const { content, class: className } = Astro.props;
 
 const highlighter = await highlighterPromise;
 
+function escapeHtml(str: string): string {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 const renderer = {
     link({ href, title, text }: { href: string; title?: string; text: string }) {
         const isExternal = href?.startsWith('http://') || href?.startsWith('https://');
-        const titleAttr = title ? ` title="${title}"` : '';
+        const safeHref = escapeHtml(href || '');
+        const titleAttr = title ? ` title="${escapeHtml(title)}"` : '';
         const externalAttrs = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
-        return `<a href="${href}"${titleAttr}${externalAttrs}>${text}</a>`;
+        return `<a href="${safeHref}"${titleAttr}${externalAttrs}>${text}</a>`;
     }
 };
 
