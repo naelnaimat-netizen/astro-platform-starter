@@ -86,6 +86,15 @@ src/
 - Optimize images using Netlify Image CDN
 - Implement proper caching strategies
 
+### Accessibility Guidelines
+- Use semantic HTML elements (e.g., `<nav>`, `<main>`, `<article>`)
+- Ensure all interactive elements are keyboard accessible
+- Provide meaningful alt text for images
+- Maintain sufficient color contrast ratios (WCAG AA minimum)
+- Use ARIA attributes only when semantic HTML is insufficient
+- Test with screen readers and keyboard navigation
+- Ensure focus states are visible for interactive elements
+
 ## Common Commands
 
 ```bash
@@ -144,3 +153,59 @@ export const POST: APIRoute = async ({ request }) => {
 - Focus on modern web standards and performance
 - Showcase SSR, Edge Functions, and Blob storage capabilities
 - Maintain simplicity while demonstrating advanced features
+
+## Security Best Practices
+- Never commit secrets, API keys, or sensitive data to the repository
+- Use Netlify environment variables for configuration
+- Validate and sanitize all user inputs in API routes
+- Implement proper error handling without exposing sensitive information
+- Use TypeScript's strict mode to catch potential issues early
+- Follow OWASP guidelines for web security
+
+## Error Handling
+- Use try-catch blocks in all API routes and async operations
+- Return meaningful error messages with appropriate HTTP status codes
+- Log errors for debugging but don't expose stack traces to clients
+- Handle edge cases and null/undefined values explicitly
+- Example error response:
+  ```ts
+  return new Response(
+    JSON.stringify({ error: 'Resource not found' }),
+    { status: 404, headers: { 'Content-Type': 'application/json' } }
+  );
+  ```
+
+## Dependency Management
+- Review security advisories before adding new dependencies
+- Keep dependencies up-to-date using Renovate (configured in this repo)
+- Prefer well-maintained packages with active communities
+- Document why specific dependencies are chosen if not obvious
+- Use exact versions for critical dependencies
+- Run `npm audit` to check for vulnerabilities
+
+## Environment Variables
+- Store environment-specific values in Netlify environment variables
+- Access via `import.meta.env` in Astro components
+- Use `process.env` in Netlify Functions
+- Never hardcode production values
+- Document required environment variables in README or comments
+- Use `.env.example` for local development templates
+
+## Git Workflow and Commit Messages
+- Write clear, descriptive commit messages in imperative mood
+- Format: `<type>: <description>` (e.g., "feat: add blob storage demo")
+- Types: feat, fix, docs, style, refactor, test, chore
+- Keep commits atomic and focused on a single concern
+- Reference issue numbers when applicable
+- Examples:
+  - `feat: implement edge function for geolocation`
+  - `fix: resolve hydration error in NewShape component`
+  - `docs: update API endpoint documentation`
+
+## Documentation Standards
+- Add JSDoc comments for exported functions and complex logic
+- Document non-obvious code decisions with inline comments
+- Keep README.md up-to-date with setup and deployment instructions
+- Document API endpoints with request/response examples
+- Update component props documentation when interfaces change
+- Include code examples for complex patterns or integrations
