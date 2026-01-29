@@ -2,6 +2,7 @@
 import { Marked } from 'marked';
 import markedShiki from 'marked-shiki';
 import { highlighterPromise } from '../utils/highlighter';
+import type { Tokens } from 'marked';
 
 interface Props {
     content: string;
@@ -21,17 +22,32 @@ function escapeHtml(str: string): string {
         .replace(/'/g, '&#39;');
 }
 
+function encodeUrl(href: string): string | null {
+    try {
+        return encodeURI(href).replace(/%25/g, '%');
+    } catch {
+        return null;
+    }
+}
+
+const marked = new Marked();
+
 const renderer = {
-    link({ href, title, text }: { href: string; title?: string; text: string }) {
+    link(this: { parser: { parseInline: (tokens: Tokens.Generic[]) => string } }, token: Tokens.Link) {
+        const { href, title, tokens } = token;
+        const text = this.parser.parseInline(tokens);
+        const encodedHref = encodeUrl(href);
+        if (encodedHref === null) {
+            return text;
+        }
         const isExternal = href?.startsWith('http://') || href?.startsWith('https://');
-        const safeHref = escapeHtml(href || '');
         const titleAttr = title ? ` title="${escapeHtml(title)}"` : '';
         const externalAttrs = isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
-        return `<a href="${safeHref}"${titleAttr}${externalAttrs}>${text}</a>`;
+        return `<a href="${encodedHref}"${titleAttr}${externalAttrs}>${text}</a>`;
     }
 };
 
-const html = await new Marked()
+const html = await marked
     .use(
         markedShiki({
             highlight(code, lang, props) {
