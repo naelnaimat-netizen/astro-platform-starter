@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import ShapePreview from './ShapePreview.tsx';
 import { generateBlob, uploadDisabled } from '../../../utils';
@@ -13,10 +13,10 @@ export default function NewShape(props: Props) {
     const [blobData, setBlobData] = useState<BlobProps>();
     const [wasUploaded, setWasUploaded] = useState<boolean>(false);
 
-    const randomizeBlob = () => {
+    const randomizeBlob = useCallback(() => {
         setBlobData(generateBlob());
         setWasUploaded(false);
-    };
+    }, []);
 
     const uploadBlob = async () => {
         const response = await fetch('/api/blobs', {
@@ -24,10 +24,7 @@ export default function NewShape(props: Props) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(blobData.parameters)
         });
-        const data = await response.json();
-        if (data.message) {
-            console.log(data.message);
-        }
+        await response.json();
         setWasUploaded(true);
         setLastMutationTime(Date.now());
     };
@@ -36,7 +33,7 @@ export default function NewShape(props: Props) {
         if (!blobData) {
             randomizeBlob();
         }
-    }, [blobData]);
+    }, [blobData, randomizeBlob]);
 
     return (
         <>

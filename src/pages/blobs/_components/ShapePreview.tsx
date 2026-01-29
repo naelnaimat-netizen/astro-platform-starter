@@ -1,9 +1,10 @@
-import { randomInt } from '../../../utils.ts';
+import { useMemo } from 'react';
 import type { BlobProps } from '../../../types.ts';
 
 export default function ShapePreview(props: BlobProps) {
     const { svgPath, parameters } = props;
-    const gradientId = `gradient-${randomInt(10_000_000, 100_000_000)}`;
+    // Use seed from parameters to create a stable gradient ID
+    const gradientId = useMemo(() => `gradient-${parameters.seed}`, [parameters.seed]);
 
     return (
         <svg viewBox={`0 0 ${parameters.size} ${parameters.size}`} xmlns="http://www.w3.org/2000/svg" width="100%">

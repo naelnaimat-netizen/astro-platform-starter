@@ -14,7 +14,6 @@ export default function StoredShapes(props: Props) {
     const [previewData, setPreviewData] = useState<BlobProps>(null);
 
     const getBlobKeyList = async () => {
-        console.log('Fetching keys...');
         const response = await fetch('/api/blobs', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
