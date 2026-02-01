@@ -27,7 +27,7 @@ pieces of content (pages, JSON responses, or whatnot) based on the tags associat
 In real-world applications, you may want to use [stale-while-revalidate](https://docs.netlify.com/platform/caching/#stale-while-revalidate-directive) as well, so that end-users don't experience 
 a performance hit as pages are being rebuilt.
 
-Use the button below to invlidate a random tag out of this page's tags, then refresh the page.
+Use the button below to invalidate a random tag out of this page's tags, then refresh the page.
 `;
 
 const randomExampleCacheTag = cacheTags[generateRandomIntegerInRange(0, cacheTags.length - 1)];

@@ -43,7 +43,7 @@ export function generateCacheControlHeaders(maxCacheDurationDays = 365, cacheTag
     // We're also setting cache tags to be able to later purge via API (see: https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/)
     const cacheControlHeaders = {
         'Cache-Control': 'public, max-age=0, must-revalidate', // Tell browsers to always revalidate
-        'Netlify-CDN-Cache-Control': `public, max-age=${maxCacheDurationDays * 86_400}, must-revalidate` // Tells Netlify CDN the max allwed cache duration
+        'Netlify-CDN-Cache-Control': `public, max-age=${maxCacheDurationDays * 86_400}, must-revalidate` // Tells Netlify CDN the max allowed cache duration
     };
     if (cacheTags?.length > 0) cacheControlHeaders['Cache-Tag'] = cacheTags.join(',');
     return cacheControlHeaders;

@@ -7,7 +7,7 @@ import Layout from '../layouts/Layout.astro';
 
 const corgiImagePath = '/images/corgi.jpg';
 
-const forceWebPFormat = process.env.NODE_ENV = "development";
+const forceWebPFormat = process.env.NODE_ENV === "development";
 const responsiveImageSrcSet = [640, 1280, 2048]
     .map((imageWidth) => {
         return `/.netlify/images?url=${corgiImagePath}&w=${imageWidth}${forceWebPFormat ? '&fm=webp' : ''} ${imageWidth}w`;
