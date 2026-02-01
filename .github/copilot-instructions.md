@@ -144,3 +144,48 @@ export const POST: APIRoute = async ({ request }) => {
 - Focus on modern web standards and performance
 - Showcase SSR, Edge Functions, and Blob storage capabilities
 - Maintain simplicity while demonstrating advanced features
+
+## Boundaries and Constraints
+
+### What NOT to Do
+- **Never** commit secrets, API keys, or sensitive data
+- **Never** modify or remove `.github/` directory contents without explicit instruction
+- **Never** change deployment configurations (`netlify.toml`, `astro.config.mjs`) without careful consideration
+- **Never** remove or significantly modify existing functionality without understanding its purpose
+- **Never** introduce breaking changes to public APIs or component interfaces
+- **Avoid** adding unnecessary dependencies - use existing libraries when possible
+
+### Security Best Practices
+- Always validate user inputs in API routes
+- Use environment variables for configuration (never hardcode)
+- Implement proper error handling that doesn't expose sensitive information
+- Follow OWASP guidelines for web security
+- Use TypeScript's type safety to prevent runtime errors
+
+## Workflow Guidance
+
+### For Bug Fixes
+1. Reproduce the bug locally
+2. Identify the root cause
+3. Write a minimal fix
+4. Test the fix thoroughly
+5. Ensure no regressions in related functionality
+
+### For New Features
+1. Understand the feature requirements
+2. Plan the implementation (components, routes, utilities)
+3. Implement incrementally
+4. Test each piece as you build
+5. Update documentation if needed
+
+### For Refactoring
+1. Ensure test coverage exists (if applicable)
+2. Make small, isolated changes
+3. Verify functionality after each change
+4. Keep the scope minimal and focused
+
+### For Documentation
+1. Use clear, concise language
+2. Include code examples where helpful
+3. Follow the existing documentation style
+4. Update relevant sections consistently
