@@ -1,35 +1,35 @@
 import type { APIRoute } from 'astro';
 import { getStore } from '@netlify/blobs';
-import { uploadDisabled } from '../../utils';
+import { isUploadDisabled } from '../../utils';
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
-    if (uploadDisabled) throw new Error('Sorry, uploads are disabled');
+    if (isUploadDisabled) throw new Error('Sorry, uploads are disabled');
 
-    const parameters = await request.json();
-    const blobStore = getStore('shapes');
-    const key = parameters.name;
-    await blobStore.setJSON(key, parameters);
+    const shapeParameters = await request.json();
+    const shapesStore = getStore('shapes');
+    const shapeKey = shapeParameters.name;
+    await shapesStore.setJSON(shapeKey, shapeParameters);
     return new Response(
         JSON.stringify({
-            message: `Stored shape "${key}"`
+            message: `Stored shape "${shapeKey}"`
         })
     );
 };
 
 export const GET: APIRoute = async ({ request }) => {
     try {
-        const blobStore = getStore({ name: 'shapes', consistency: 'strong' });
-        const data = await blobStore.list();
-        const keys = data.blobs.map(({ key }) => key);
+        const shapesStore = getStore({ name: 'shapes', consistency: 'strong' });
+        const listResponse = await shapesStore.list();
+        const storedShapeKeys = listResponse.blobs.map(({ key }) => key);
         return new Response(
             JSON.stringify({
-                keys
+                keys: storedShapeKeys
             })
         );
-    } catch (e) {
-        console.error(e);
+    } catch (error) {
+        console.error(error);
         return new Response(
             JSON.stringify({
                 keys: [],

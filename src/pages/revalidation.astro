@@ -1,22 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Markdown from '../components/Markdown.astro';
-import { cacheHeaders, randomInt } from '../utils';
+import { generateCacheControlHeaders, generateRandomIntegerInRange } from '../utils';
 
 export const prerender = false;
 
-const tags = ['/revalidation', 'cats-related', 'all-pets-related'];
-const headers = cacheHeaders(365, tags);
+const cacheTags = ['/revalidation', 'cats-related', 'all-pets-related'];
+const cacheControlHeaders = generateCacheControlHeaders(365, cacheTags);
 
-Object.entries(headers).map(([k, v]) => {
-    Astro.response.headers.set(k, v);
+Object.entries(cacheControlHeaders).map(([headerName, headerValue]) => {
+    Astro.response.headers.set(headerName, headerValue);
 });
 
-const explainer = `
+const pageExplainerContent = `
 This is a server-rendered page, last created at \`${new Date().toUTCString()}\` with a few extra response headers:
 
 ~~~js
-${JSON.stringify(headers, null, 2)}
+${JSON.stringify(cacheControlHeaders, null, 2)}
 ~~~
 
 Meaning: **for browsers,** this is a non-cacheable page. At the **CDN level,** it *is* cacheable for up to a year (and Netlify also automatically busts the cache on new deployments, by default).
@@ -27,36 +27,36 @@ pieces of content (pages, JSON responses, or whatnot) based on the tags associat
 In real-world applications, you may want to use [stale-while-revalidate](https://docs.netlify.com/platform/caching/#stale-while-revalidate-directive) as well, so that end-users don't experience 
 a performance hit as pages are being rebuilt.
 
-Use the button below to invlidate a random tag out of this page's tags, then refresh the page.
+Use the button below to invalidate a random tag out of this page's tags, then refresh the page.
 `;
 
-const exampleTag = tags[randomInt(0, tags.length - 1)];
+const randomExampleCacheTag = cacheTags[generateRandomIntegerInRange(0, cacheTags.length - 1)];
 ---
 
 <Layout title="Revalidation">
     <h1 class="mb-10">Revalidating Server Content</h1>
-    <Markdown content={explainer} class="mb-10" />
+    <Markdown content={pageExplainerContent} class="mb-10" />
     <div class="flex flex-wrap gap-4">
-        <button class="revalidate-button btn" data-tag={exampleTag}>Invalidate tag: {exampleTag}</button>
+        <button class="revalidate-button btn" data-tag={randomExampleCacheTag}>Invalidate tag: {randomExampleCacheTag}</button>
         <button class="btn" onclick="location.reload()">Reload page</button>
     </div>
 </Layout>
 
 <script>
-    function revalidate(tag: string) {
+    function invalidateCacheTag(cacheTag: string) {
         fetch('/api/revalidate', {
             method: 'POST',
-            body: JSON.stringify({ tags: [tag] }),
+            body: JSON.stringify({ tags: [cacheTag] }),
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        alert(`Invalidated tag: ${tag}`);
+        alert(`Invalidated tag: ${cacheTag}`);
     }
 
     const revalidateButton = document.querySelectorAll('button.revalidate-button')[0];
-    revalidateButton.addEventListener('click', (e) => {
-        const tag = (e.target as HTMLButtonElement).getAttribute('data-tag');
-        revalidate(tag);
+    revalidateButton.addEventListener('click', (clickEvent) => {
+        const cacheTagToInvalidate = (clickEvent.target as HTMLButtonElement).getAttribute('data-tag');
+        invalidateCacheTag(cacheTagToInvalidate);
     });
 </script>

@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Markdown from '../../components/Markdown.astro';
 
-const explainer = `
+const fallbackPageExplanationContent = `
 # You've reached the fallback page.
 
 This page is using a [Netlify Edge Function](https://docs.netlify.com/edge-functions/overview/) to rewrite the URL based on visitor geography.
@@ -16,5 +16,5 @@ There are advatanges to using Edge Functions directly, such as the ability to ac
 ---
 
 <Layout title="Fallback">
-    <Markdown content={explainer} />
+    <Markdown content={fallbackPageExplanationContent} />
 </Layout>
