@@ -1,7 +1,7 @@
 ---
 import Logo from '../components/Logo.astro';
 
-const navItems = [
+const navigationItems = [
     { linkText: 'Home', href: '/' },
     { linkText: 'Revalidation', href: '/revalidation' },
     { linkText: 'Image CDN', href: '/image-cdn' },
@@ -15,12 +15,12 @@ const navItems = [
         <Logo />
     </a>
     {
-        !!navItems?.length && (
+        !!navigationItems?.length && (
             <ul class="flex flex-wrap gap-x-4 gap-y-1">
-                {navItems.map((item) => (
+                {navigationItems.map((navItem) => (
                     <li>
-                        <a href={item.href} class="inline-block px-1.5 py-1 sm:px-3 sm:py-2">
-                            {item.linkText}
+                        <a href={navItem.href} class="inline-block px-1.5 py-1 sm:px-3 sm:py-2">
+                            {navItem.linkText}
                         </a>
                     </li>
                 ))}

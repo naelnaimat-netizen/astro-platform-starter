@@ -1,44 +1,44 @@
 import { useState, useEffect } from 'react';
 import ShapePreview from './ShapePreview.tsx';
-import { generateBlob } from '../../../utils';
+import { generateBlobShape } from '../../../utils';
 import type { BlobProps } from '../../../types.ts';
 
-interface Props {
+interface StoredShapesProps {
     lastMutationTime: number;
 }
 
-export default function StoredShapes(props: Props) {
+export default function StoredShapes(props: StoredShapesProps) {
     const { lastMutationTime } = props;
-    const [keys, setKeys] = useState<string[]>([]);
-    const [selectedKey, setSelectedKey] = useState<string>(null);
-    const [previewData, setPreviewData] = useState<BlobProps>(null);
+    const [storedBlobKeys, setStoredBlobKeys] = useState<string[]>([]);
+    const [currentlySelectedKey, setCurrentlySelectedKey] = useState<string>(null);
+    const [selectedBlobPreviewData, setSelectedBlobPreviewData] = useState<BlobProps>(null);
 
-    const getBlobKeyList = async () => {
+    const fetchAllBlobKeys = async () => {
         console.log('Fetching keys...');
         const response = await fetch('/api/blobs', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
-        const data = await response.json();
-        if (data.keys) {
-            setKeys(data.keys);
+        const responseData = await response.json();
+        if (responseData.keys) {
+            setStoredBlobKeys(responseData.keys);
         }
     };
 
-    const getBlobByKey = async (key: string) => {
-        setSelectedKey(key);
-        const params = new URLSearchParams({ key });
-        const response = await fetch(`/api/blob/?${params}`, {
+    const fetchBlobDataByKey = async (blobKey: string) => {
+        setCurrentlySelectedKey(blobKey);
+        const queryParams = new URLSearchParams({ key: blobKey });
+        const response = await fetch(`/api/blob/?${queryParams}`, {
             method: 'GET'
         });
-        const data = await response.json();
-        if (data.blob) {
-            setPreviewData(generateBlob(data.blob));
+        const responseData = await response.json();
+        if (responseData.blob) {
+            setSelectedBlobPreviewData(generateBlobShape(responseData.blob));
         }
     };
 
     useEffect(() => {
-        getBlobKeyList();
+        fetchAllBlobKeys();
     }, [lastMutationTime]);
 
     return (
@@ -46,20 +46,20 @@ export default function StoredShapes(props: Props) {
             <h2 className="mb-4 text-xl text-center sm:text-xl">Objects in Blob Store</h2>
             <div className="w-full bg-white rounded-lg">
                 <div className="p-4 text-center min-h-14">
-                    {keys?.length ? (
+                    {storedBlobKeys?.length ? (
                         <div className="space-y-1">
-                            {keys.map((keyName) => (
+                            {storedBlobKeys.map((blobKeyName) => (
                                 <button
-                                    key={keyName}
+                                    key={blobKeyName}
                                     className={
                                         'inline-flex items-center justify-center w-full px-4 py-1.5 rounded-sm text-sm text-gray-900 cursor-pointer text-center transition hover:bg-complementary/20' +
-                                        (selectedKey === keyName ? ' bg-complementary/20 pointer-events-none' : '')
+                                        (currentlySelectedKey === blobKeyName ? ' bg-complementary/20 pointer-events-none' : '')
                                     }
                                     onClick={() => {
-                                        getBlobByKey(keyName);
+                                        fetchBlobDataByKey(blobKeyName);
                                     }}
                                 >
-                                    {keyName}
+                                    {blobKeyName}
                                 </button>
                             ))}
                         </div>
@@ -67,9 +67,9 @@ export default function StoredShapes(props: Props) {
                         <span className="text-gray-900">Please upload some shapes!</span>
                     )}
                 </div>
-                {previewData && (
+                {selectedBlobPreviewData && (
                     <div className="p-4 border-t border-gray-200 aspect-square text-primary">
-                        <ShapePreview {...previewData} />
+                        <ShapePreview {...selectedBlobPreviewData} />
                     </div>
                 )}
             </div>

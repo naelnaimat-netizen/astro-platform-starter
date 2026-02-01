@@ -5,15 +5,15 @@ import Diff from '../components/Diff.astro';
 import Markdown from '../components/Markdown.astro';
 import Layout from '../layouts/Layout.astro';
 
-const sampleImage = '/images/corgi.jpg';
+const corgiImagePath = '/images/corgi.jpg';
 
-const forceWebP = process.env.NODE_ENV = "development";
-const sampleImageSrcSet = [640, 1280, 2048]
-    .map((size) => {
-        return `/.netlify/images?url=${sampleImage}&w=${size}${forceWebP ? '&fm=webp' : ''} ${size}w`;
+const forceWebPFormat = process.env.NODE_ENV = "development";
+const responsiveImageSrcSet = [640, 1280, 2048]
+    .map((imageWidth) => {
+        return `/.netlify/images?url=${corgiImagePath}&w=${imageWidth}${forceWebPFormat ? '&fm=webp' : ''} ${imageWidth}w`;
     })
     .join(', ');
-const sizes = '(max-width: 1024px) 100vw, 1024px';
+const responsiveImageSizes = '(max-width: 1024px) 100vw, 1024px';
 
 const astroImageSnippet = `
 ## Using the built-in Astro &lt;Image /&gt; component
@@ -42,8 +42,8 @@ Note that aside from Astro's \`Image\` or rolling your own \`<img>\` tags, you c
 
 // ==> On the right, explicitly using Netlify Image CDN endpoint for a responsive image
 <img 
-  srcSet="${sampleImageSrcSet}"
-  sizes="${sizes}" 
+  srcSet="${responsiveImageSrcSet}"
+  sizes="${responsiveImageSizes}" 
   alt="Corgi" 
 />
 ~~~
@@ -77,7 +77,7 @@ detection, so format is set to WebP.
                     <div>
                         <div class="relative">
                             <span class="hidden absolute py-1.5 px-2.5 text-sm rounded-md bg-gray-900/70 top-2.5 left-2.5"></span>
-                            <img src={sampleImage} alt="Corgi" />
+                            <img src={corgiImagePath} alt="Corgi" />
                         </div>
                     </div>
                 </Fragment>
@@ -86,7 +86,7 @@ detection, so format is set to WebP.
                         <div class="relative">
                             <span class="hidden absolute py-1.5 px-2.5 text-sm rounded-md bg-gray-900/70 top-2.5 right-2.5"></span>
 
-                            <img srcset={sampleImageSrcSet} alt="Corgi" />
+                            <img srcset={responsiveImageSrcSet} alt="Corgi" />
                         </div>
                     </div>
                 </Fragment>
@@ -96,24 +96,24 @@ detection, so format is set to WebP.
 </Layout>
 
 <script>
-    const images = document.querySelectorAll<HTMLImageElement>('.image-diff img');
+    const comparisonImages = document.querySelectorAll<HTMLImageElement>('.image-diff img');
 
-    images.forEach((image) => {
-        if (image.complete) {
-            showImageSize(image);
+    comparisonImages.forEach((imageElement) => {
+        if (imageElement.complete) {
+            displayImageFileSize(imageElement);
         } else {
-            image.addEventListener('load', () => {
-                showImageSize(image);
+            imageElement.addEventListener('load', () => {
+                displayImageFileSize(imageElement);
             });
         }
     });
 
-    function showImageSize(image: HTMLImageElement) {
-        const imageEntry = window?.performance?.getEntriesByName(image.currentSrc)?.[0] as PerformanceResourceTiming;
-        if (imageEntry && imageEntry.encodedBodySize) {
-            const imageOverlay = image.previousElementSibling;
-            imageOverlay.classList.remove('hidden');
-            imageOverlay.textContent = `Size: ${Math.ceil(imageEntry.encodedBodySize / 1024)}KB`;
+    function displayImageFileSize(imageElement: HTMLImageElement) {
+        const performanceEntry = window?.performance?.getEntriesByName(imageElement.currentSrc)?.[0] as PerformanceResourceTiming;
+        if (performanceEntry && performanceEntry.encodedBodySize) {
+            const sizeOverlayElement = imageElement.previousElementSibling;
+            sizeOverlayElement.classList.remove('hidden');
+            sizeOverlayElement.textContent = `Size: ${Math.ceil(performanceEntry.encodedBodySize / 1024)}KB`;
         }
     }
 </script>

@@ -4,17 +4,17 @@ import { getStore } from '@netlify/blobs';
 export const prerender = false;
 
 export const GET: APIRoute = async (context) => {
-    const urlParams = new URL(context.url);
-    const key = urlParams.searchParams.get('key');
-    if (!key) {
+    const requestUrl = new URL(context.url);
+    const blobKey = requestUrl.searchParams.get('key');
+    if (!blobKey) {
         return new Response('Bad Request', { status: 400 });
     }
 
-    const blobStore = getStore('shapes');
-    const blob = await blobStore.get(key, { type: 'json' });
+    const shapesStore = getStore('shapes');
+    const blobData = await shapesStore.get(blobKey, { type: 'json' });
     return new Response(
         JSON.stringify({
-            blob
+            blob: blobData
         })
     );
 };
