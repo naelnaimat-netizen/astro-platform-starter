@@ -3,17 +3,32 @@ import Layout from '../layouts/Layout.astro';
 import Markdown from '../components/Markdown.astro';
 
 const explainer = `
-An Astro website can go way beyond static pages - on the right platform.
+Welcome to **Sigma Academy** - your gateway to understanding the universe through the lens of science and spirituality.
 
-Netlify supports not only [Streaming SSR](https://docs.astro.build/en/guides/server-side-rendering/#html-streaming) and fast [Edge Middleware](https://docs.astro.build/en/guides/middleware/), but also [on-demand revalidation](https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/) and [stale-while-revalidate](https://www.netlify.com/blog/swr-and-fine-grained-cache-control/). 
-Any page or data can be rebuilt only when needed, without site visitors ever getting a performance hit.
+We explore the fascinating connections between **Quantum Physics**, **Mathematics**, **Science**, and the **Holy Quran**, revealing the harmony between modern scientific discoveries and ancient wisdom.
+
+Our courses and resources are designed to inspire curiosity, deepen understanding, and bridge the gap between scientific inquiry and spiritual enlightenment.
 `;
 ---
 
-<Layout title="Welcome to Astro.">
-    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
+<Layout title="Sigma Academy - Quantum Physics, Math & Science">
+    <h1 class="mb-10">Welcome to Sigma Academy</h1>
     <Markdown content={explainer} class="mb-10 text-lg" />
+    <div class="grid gap-6 md:grid-cols-3 mb-10">
+        <div class="bg-white/10 rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-2">🔬 Quantum Physics</h3>
+            <p class="text-sm opacity-80">Explore the mysteries of the quantum realm and its profound implications.</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-2">📐 Mathematics</h3>
+            <p class="text-sm opacity-80">Discover the universal language that describes our reality.</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-2">📖 Science & Faith</h3>
+            <p class="text-sm opacity-80">Bridge the connection between scientific knowledge and spiritual wisdom.</p>
+        </div>
+    </div>
     <p>
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
+        <a href="/blobs" class="btn btn-lg sm:min-w-64">Explore Our Resources</a>
     </p>
 </Layout>

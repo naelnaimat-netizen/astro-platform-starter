@@ -1,8 +1,15 @@
-# Astro on Netlify Platform Starter
+# Sigma Academy
 
-[Live Demo](https://astro-platform-starter.netlify.app/)
+An educational platform exploring **Quantum Physics**, **Mathematics**, **Science**, and the **Holy Quran**.
 
-A modern starter based on Astro.js, Tailwind, and [Netlify Core Primitives](https://docs.netlify.com/core/overview/#develop) (Edge Functions, Image CDN, Blobs).
+Built with Astro.js, Tailwind CSS, and deployed on Netlify.
+
+## Features
+
+- Modern, responsive web design
+- Server-side rendering with Astro
+- Fast page loads with Netlify Edge Functions
+- Dynamic content with Netlify Blobs
 
 ## Astro Commands
 
