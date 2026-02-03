@@ -1,0 +1,16 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import EdgeFunctionExplainer from '../../../components/EdgeFunctionExplainer.astro';
+
+interface Props {
+    title: string;
+    heading: string;
+}
+
+const { title, heading } = Astro.props;
+---
+
+<Layout title={title}>
+    <h1 class="mb-10">{heading}</h1>
+    <EdgeFunctionExplainer />
+</Layout>
