@@ -22,5 +22,6 @@ User uploads are disabled in this site. To run your own and try it out:
 <Layout title="Blobs">
     <h1 class="mb-10">Blobs x Blobs</h1>
     <Markdown content={explainer} class="mb-12" />
+    {uploadDisabled && <Markdown content={uploadDisabledText} class="mb-12" />}
     <ShapeEditor client:load />
 </Layout>
